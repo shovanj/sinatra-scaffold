@@ -1,0 +1,30 @@
+Simple sinatra extension for datamapper that displays records  in admin panel.
+
+h1. Usage:
+
+# specify the columns that you want to display in the admin panel
+# inside the configure_scaffold block
+
+===============================================================
+configure_scaffold do
+  scaffold :models => [:user, :expense] 
+end
+
+Sinatra::Base.register Sinatra::Scaffold
+================================================================
+
+
+
+To copy the view, css, js files run the following command
+
+$scaffold-gen setup_files                      
+
+
+# that will generate the following routes 
+# /admin/users
+# /admin/expenses
+
+h3. Todos
+
+- edit, delete, update actions
+- support associations

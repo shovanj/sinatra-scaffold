@@ -1,0 +1,53 @@
+%script{:type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
+%script{:type => "text/javascript", :src => "/scripts/scaffold.js"}
+%link{:rel => "stylesheet", :href => '/stylesheets/scaffold.css', :type => "text/css", :media => "screen"}
+- model_name = @model.name.downcase
+
+%table{:cellspacing => "0px", :cellpadding => "0px"}
+  %tr
+    %td
+      .scaffold
+        %div{:style => "float: left;"}
+          %h3
+            = @model.name
+        %a{:href => "#", :id => 'search_link'}
+          %img{:src => "/images/scaffold/magnifier.png", :border => "0"}
+  %tr
+    %td
+      /if search action then display search_area
+      - if params[:"#{model_name}"]
+        - display = 'inline'
+      - else
+        - display = 'none'
+      - haml_tag :div, {:id => "search_area", :style => "display: #{display}"} do
+        - haml_tag :form, {:method => 'get', :action => "/admin/#{Extlib::Inflection.tableize(@model.name)}/search"} do
+          %table{:class => 'scaffold', :cellpadding =>  "0", :cellspacing => "0", :border => "0"}
+            - @model.properties.each do |column|
+              - next unless column.type == DataMapper::Types::Text or column.type == String
+              %tr{:class => 'search'}
+                %td{:align => 'right'}
+                  = Extlib::Inflection.camelize(column.name)
+                %td
+                  - if params["#{model_name}"].nil?
+                    - haml_tag :input, {:type => 'text', :size => '15', :name => "#{model_name}[#{column.name}]", :id => "#{model_name}_#{column.name}"}
+                  - else
+                    - haml_tag :input, {:type => 'text', :size => '15', :name => "#{model_name}[#{column.name}]", :id => "#{model_name}_#{column.name}", :value => params["#{model_name}"]["#{column.name}"]}
+            %tr
+              %td{:class => 'label last'}
+              %td
+                %input{:type=>'submit', :value=>'Search'}
+  %tr
+    %td
+      %table{:class => 'scaffold', :id => "table",  :border => '0', :cellpadding => '5px', :cellspacing => '0px'}
+        %tr
+          %th Actions
+          - @model.properties.each do |column|
+            %th
+              = Extlib::Inflection.camelize(column.name)
+        - @records.each do |record|
+          %tr{:class => 'scaffold record'}
+            %td 
+              %a{:href => "/admin/#{Extlib::Inflection.tableize(@model.name)}/destroy"} Delete
+            - record.model.properties.each do |attr|
+              %td
+                = eval("record.#{attr.name}") || '-'

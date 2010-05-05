@@ -1,0 +1,92 @@
+table
+{
+  width: 100%
+  border-collapse:separate;
+}
+tr.search td
+{
+  padding: 5px 5px;
+  color: #333;
+  font-family: Verdana, sans-serif;
+  font-size: 11px;
+
+}
+
+#search_area
+{
+  padding-top: 10px;
+  font-family: Verdana, sans-serif;
+  display: none;
+  float: left;
+  margin: 0;
+  background-color: #f2f2f2;
+  clear: both;
+  width: 100%;
+  align: center;
+}
+
+.scaffold img
+{
+  padding-top: 8px;
+  margin: 0;
+}
+
+.scaffold h3
+{
+  font-size: 1.3pc;
+  color:#555555;
+  font-family: Verdana, sans-serif;
+  margin:0;
+  padding:2px 0;
+}
+
+.scaffold table {
+  margin-top: 5px;
+  clear: both;
+  font-size: 100%;
+  border-collapse: collapse; }
+
+.scaffold th {
+  color: #FFFFFF;
+  background-color: #323232;
+  text-align: left;
+  font:bold 11px arial,sans-serif;
+}
+.scaffold tr
+{
+
+}
+th a {
+    color: #aaa;
+    font-weight: bold;
+    padding-right: 10px; }
+    th a:link, th a:hover, th a:visited, th a:active {
+      color: #aaa;
+      font-weight: bold;
+      padding-right: 10px; }
+
+.scaffold td {
+  padding: 9px 4px;
+  vertical-align: top;
+  font-size: 1.2em;
+  color: #434343; }
+
+.scaffold tr.record td
+{
+  padding: 5px 5px;
+  color: #333;
+  font-family: Verdana, sans-serif;
+  font-size: 11px;
+  border-left:medium none;
+  border-right:1px solid #111111;
+}
+tr.eventr
+{
+	background-color: #f2f2f2;
+	color: #000000;
+}
+tr.oddtr
+{
+	background-color: #ffffff;
+	color: #000000;
+}
