@@ -1,0 +1,18 @@
+<table class="table table-striped table-bordered table-condensed">
+  <thead>
+    <tr>
+      <th>Attr</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <body>
+    <% schema.each do |attr| %>
+      <tr>
+        <td width="200px"><%= attr %></td>
+        <td><%= escape_html record[attr] %></td>
+      </tr>
+    <% end %>
+  </body>
+</table>
+
+<a href="/<%= table %>" class="btn btn-info">Back to <%= table %></a>

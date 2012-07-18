@@ -1,0 +1,18 @@
+<form accept-charset="UTF-8" action="/<%= table %>"  method="post" class="well">
+  <div style="margin:0;padding:0;display:inline">
+    <input name="utf8" type="hidden" value="✓">
+    <input name="_method" type="hidden" value="put">
+  </div>
+  <% schema.each do |attr| %>
+    <div class="control-group">
+      <label class="control-label" for="input01"><%= attr %></label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="input01" value="<%= escape_html record[attr] %>">
+      </div>
+    </div>
+  <% end %>
+
+  <br />
+  <input class="btn" name="commit" type="submit" value="Search">
+  <a class="close" href="<%= table %>" style="opacity: 0.4;">&times;</a>
+</form>
