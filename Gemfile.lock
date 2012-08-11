@@ -2,15 +2,12 @@ PATH
   remote: .
   specs:
     sinatra-scaffold (0.0.1)
-      mysql2 (= 0.3.11)
       sequel (= 3.36.1)
       sinatra (= 1.3.2)
-      sqlite3 (= 1.3.6)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    mysql2 (0.3.11)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -19,7 +16,6 @@ GEM
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
-    sqlite3 (1.3.6)
     tilt (1.3.3)
 
 PLATFORMS

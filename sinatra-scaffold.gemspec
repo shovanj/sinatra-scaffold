@@ -9,9 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "http://www.circlingminds.com"
 
   gem.add_runtime_dependency 'sinatra', '1.3.2'
-  gem.add_runtime_dependency 'mysql2', '0.3.11'
   gem.add_runtime_dependency 'sequel', '3.36.1'
-  gem.add_runtime_dependency 'sqlite3', '1.3.6'
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
