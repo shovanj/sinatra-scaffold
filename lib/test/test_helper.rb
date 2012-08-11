@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'test/unit'
-require '../sinatrascaffold'
+require File.expand_path('../../sinatrascaffold', __FILE__)
 require 'rack/test'
 
 ENV['RACK_ENV'] = 'test'
