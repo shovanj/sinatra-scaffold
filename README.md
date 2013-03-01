@@ -62,8 +62,8 @@ scaffold(:users) {|c| c.only([:first_name, :last_name])}
     :host => 'localhost'
   )
                                                                                                                                             
-                                                                                                                                        class ScaffoldApp < Sinatra::Base
-                                                                                                                                          register Sinatra::Scaffold
+ class ScaffoldApp < Sinatra::Base
+    register Sinatra::Scaffold
     register WillPaginate::Sinatra
     
     ScaffoldApp.database_connection = ActiveRecord::Base.connection
