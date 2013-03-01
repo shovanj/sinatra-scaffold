@@ -1,0 +1,10 @@
+bin/
+.DS_Store
+sinatra-scaffold-app/
+.rbenv-version
+.bundle/config
+Sinatra-Scaffold.sublime-project
+Sinatra-Scaffold.sublime-workspace
+.emacs.desktop
+.emacs.desktop.lock
+vendor/

@@ -1,17 +1,32 @@
-Simple sinatra extension that can be used to display records. Uses sequel gem to fetch table info and data.
+Simple sinatra extension that can be used to create a quick admin interface to access table contents. Uses activerecord to fetch table info and data.
 
 ### Usage:
 
-1 Register the extension in your sinatra app.
+1. Require your AR model files in your app. eg:
+
+```ruby
+Dir["#{File.dirname(__FILE__)}/models/*.rb"].sort!.each {|f| require_relative f}
+```
+
+2. Register the extension in your sinatra app. Add will_paginate extension for pagination.
 
 ```ruby
 register Sinatra::Scaffold
+register WillPaginate::Sinatra
 ```
 
-2 Set database connection inside the app.
+3. Set database connection inside the sinatra app.
 
 ```ruby
-set_database Sequel.mysql2(:user => 'root', :host => 'localhost', :database => 'db_name',:password=>'')
+ActiveRecord::Base.
+  establish_connection(
+  :adapter  => "mysql2",
+  :database => "scaffold_dev",
+  :username => 'root',
+  :password => '',
+  :host => 'localhost'
+  )
+)
 ```
 
 3 Specify tables and respective columns that you want to display.
@@ -28,40 +43,35 @@ end
 scaffold :items do |config|
   config.only :name, :email
 end
+scaffold(:users) {|c| c.only([:first_name, :last_name])}
 ```
+
 
 ### Sample App:
 
 
 ```ruby
-# connect to an in-memory database
-DB = Sequel.sqlite
+  require 'active_record'
+  Dir["#{File.dirname(__FILE__)}/models/*.rb"].sort!.each {|f| require_relative f}
 
-# create an items table
-DB.create_table :items do
-  primary_key :id
-  String :name
-  Float :price
-end
-
-# create a dataset from the items table
-items = DB[:items]
-
-# populate the table
-items.insert(:name => 'abc', :price => rand * 100)
-items.insert(:name => 'def', :price => rand * 100)
-items.insert(:name => 'ghi', :price => rand * 100)
-
-class AdminApp < Sinatra::Base
-
-  register Sinatra::Scaffold
-
-  set_database DB
-
-  scaffold(:all) { |config| config.hide(:id) }
-  scaffold :items do |config|
-    config.search :name
-    config.only :id, :name
-  end
-end
+  ActiveRecord::Base.establish_connection(
+    :adapter  => "mysql2",
+    :database => "scaffold_dev",
+    :username => 'root',
+    :password => '',
+    :host => 'localhost'
+  )
+                                                                                                                                            
+                                                                                                                                        class ScaffoldApp < Sinatra::Base
+                                                                                                                                          register Sinatra::Scaffold
+    register WillPaginate::Sinatra
+    
+    ScaffoldApp.database_connection = ActiveRecord::Base.connection
+    
+    scaffold(:all) { |config|
+      config.hide([:lock_version, :created_at, :bench_marked_at, :id])
+    }
+    
+    scaffold(:users) {|c| c.only([:first_name, :last_name])}
+ end
 ```

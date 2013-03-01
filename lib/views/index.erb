@@ -1,4 +1,3 @@
-
 <table>
   <tr>
     <td><h1><%= table.capitalize %></h1></td>
@@ -9,21 +8,6 @@
     </td>
   </tr>
 </table>
-
-<% unless searchable_columns.empty? %>
-  <div id="search" class="collapse <%= 'in' if params[:q] %>" style="height: <%= params[:q] ? 'auto' : '0px' %>; ">
-    <form accept-charset="UTF-8" action="/<%= table %>"  method="get" class="well">
-      <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
-      <% searchable_columns.each do |column| %>
-        <label for="q"><%= column %></label>
-        <input class="input" id="q" name="q[<%= column %>]" type="text" value="<%= params[:q][column] if params[:q]%>">
-      <% end %>
-      <br />
-      <input class="btn" name="commit" type="submit" value="Search">
-      <a class="close" href="<%= table %>" style="opacity: 0.4;">&times;</a>
-    </form>
-  </div>
-<% end %>
 
 <table class="table table-striped table-bordered table-condensed">
   <thead>
@@ -46,13 +30,5 @@
   </body>
 </table>
 
-<div class="pagination">
-  <ul>
-    <li class="<%= previous_class = dataset.first_page? ? 'disabled' : nil %>">
-      <a href="<%= table %>?<%= previous_class ? '#' : "page=#{dataset.prev_page}" %>">« Previous</a>
-    </li>
-    <li class="<%= next_class = dataset.last_page? ? 'disabled' : nil %>">
-      <a href="<%= table %>?<%= next_class ? '#' : "page=#{dataset.next_page}" %>">Next »</a>
-    </li>
-  </ul>
-</div>"
+
+<%= will_paginate dataset %>
