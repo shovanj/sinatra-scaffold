@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'activerecord', '3.2.12'
   gem.add_runtime_dependency 'will_paginate', '3.0.4'
 
-  gem.add_development_dependency 'mysql2'  
+  gem.add_development_dependency 'pg' 
   gem.add_development_dependency 'sqlite3'
   gem.add_development_dependency 'rack-test'
 

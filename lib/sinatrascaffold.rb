@@ -10,7 +10,7 @@ module Sinatra
   module Scaffold
 
     attr_accessor :database_connection, :hidden_columns, :searchable_columns, :scaffold_tables
-    
+
     module ScaffoldHelpers
       # add helpers here
     end
@@ -30,7 +30,7 @@ module Sinatra
     def table_columns(table)
       database_connection.columns(table).collect {|column| column.name.to_sym }
     end
-    
+
     def tables
       ActiveRecord::Base.descendants.map(&:name).map {|x| x.constantize.table_name.to_sym}
     end
@@ -38,7 +38,7 @@ module Sinatra
     def models
       ActiveRecord::Base.descendants.map(&:name).map {|x| x.constantize}
     end
-    
+
     # can be used to configure multiple tables at once
     class Config
       attr_reader :tables, :app
@@ -79,14 +79,29 @@ module Sinatra
 
     private
 
-    def get_actions(model, app)
+    def get_action(model, app)
       table = model.name.pluralize.underscore
       get "/#{table}" do
         table = table.to_sym
         page = params[:page] ? params[:page].to_i : 1
-        dataset = model.order('created_at DESC').page(params[:page])
+        dataset = model.page(params[:page])
         erb :index, :locals => {:dataset => dataset, :schema => app.columns(table), :table => table, :searchable_columns => app.searchable_columns[table], :tables => app.scaffold_tables }
-        
+
+      end
+    end
+
+    def delete_action(model, app)
+      table = model.name.pluralize.underscore
+      delete "/#{table}/:id" do
+        if request.xhr?
+          record = model.where(:id => params[:id].to_i).first
+          if record && record.destroy
+            status 200 and return
+          else
+            status 404 and return
+          end
+        end
+        status 403 and return
       end
     end
 
@@ -111,9 +126,9 @@ module Sinatra
 
     def prepare_actions(config)
       models.each do |model|
-        self.instance_eval { [:get].each { |e| send("#{e}_actions", model, self) } }        
+        self.instance_eval { [:get, :delete].each { |e| send("#{e}_action", model, self) } }
       end
     end
-    
+
   end
 end
