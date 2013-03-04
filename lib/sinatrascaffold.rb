@@ -85,7 +85,7 @@ module Sinatra
         table = table.to_sym
         page = params[:page] ? params[:page].to_i : 1
         dataset = model.page(params[:page])
-        erb :index, :locals => {:dataset => dataset, :schema => app.columns(table), :table => table, :searchable_columns => app.searchable_columns[table], :tables => app.scaffold_tables }
+        erb :index, :locals => {:dataset => dataset, :schema => app.columns(table), :table => table, :searchable_columns => app.searchable_columns[table] }
 
       end
     end

@@ -1,3 +1,6 @@
+<div class="alert alert-error" style="display: none;">
+</div>
+
 <table>
   <tr>
     <td><h1><%= table.capitalize %></h1></td>
@@ -19,12 +22,13 @@
   </thead>
   <body>
     <% dataset.each do |record| %>
-      <tr>
+      <tr id="record_<%= record.id %>">
         <% schema.each do |attr| %>
           <td>
             <%= record[attr]%>
           </td>
         <% end %>
+        <td><a href="#" data-id="<%= record.id %>" data-table="<%= table %>" class="delete_link">Delete</a></td>
       </tr>
     <% end %>
   </body>
@@ -32,3 +36,5 @@
 
 
 <%= will_paginate dataset %>
+
+
